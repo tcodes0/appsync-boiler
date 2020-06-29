@@ -9,7 +9,6 @@ COMMIT_SHA=$(git rev-parse HEAD)
 
 if [ "$1" == prod ]; then
   MODE=production
-  FILE=$PWD/aws/constants.prod.ts
   PROFILE="boiler-prod"
   # todo find a better way to do this
   # see https://docs.aws.amazon.com/cdk/latest/guide/environments.html
@@ -33,10 +32,10 @@ if [ ! "$STACK_NAME" ]; then
   exit 1
 fi
 
-if [ ! -f ".env" ]; then
-  echo ".env not found, please copy .env.example and use that as a base"
-  exit 1
-fi
+# if [ ! -f ".env" ]; then
+#   echo ".env not found, please copy .env.example and use that as a base"
+#   exit 1
+# fi
 
 set -x
 

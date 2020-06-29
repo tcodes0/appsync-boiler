@@ -203,5 +203,5 @@ class DevStack extends CDK.Stack {
 }
 
 const App = new CDK.App({ autoSynth: true, context: {} });
-new DevStack(App, "BoilerStack-1");
+new DevStack(App, "StagingStack-1");
 App.synth();
