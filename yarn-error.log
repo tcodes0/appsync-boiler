@@ -1,0 +1,51 @@
+Arguments: 
+  /Users/vamac/.nvm/versions/node/v14.4.0/bin/node /usr/local/Cellar/yarn/1.22.4/libexec/bin/yarn.js
+
+PATH: 
+  /Users/vamac/.asdf/shims:/usr/local/opt/asdf/bin:/Users/vamac/.nvm/versions/node/v14.4.0/bin:/Users/vamac/Library/Android/sdk/build-tools/28.0.0/:/Users/vamac/.asdf/installs/elixir/1.9.2/bin:/usr/local/opt/ruby/bin:/usr/local/opt/libxslt/bin:/usr/local/opt/openssl/bin:/usr/local/bin:/Users/vamac/Documents/GoogleDrive/Mackup:/bin:/usr/bin:/sbin:/usr/local/sbin:/usr/sbin:/opt/X11/bin:/usr/local/opt/go/libexec/bin:/Users/vamac/.config/yarn/global/node_modules/.bin:/usr/local/opt/util-linux/bin:/Users/vamac/.rvm/bin:/Users/vamac/.cargo/bin:/Users/vamac/Library/Android/sdk/tools:/Users/vamac/Library/Android/sdk/tools/bin:/Users/vamac/Desktop/bats-core/libexec/bats-core:/Applications/Postgres.app/Contents/Versions/latest/bin
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  14.4.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/vamac/Desktop/boiler/package.json: Unexpected token } in JSON at position 810
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:310:30)
+      at /usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "appsync-boiler",
+    "version": "1.0.0",
+    "description": "appsync aws boilerplate",
+    "main": "index.js",
+    "repository": "https://github.com/Thomazella/appsync-boiler",
+    "author": "Thomazella",
+    "license": "MIT",
+    "scripts": {
+      "build": "rimraf build && sucrase ./aws -d ./build --transforms typescript,imports >/dev/null",
+      "cdk": "cdk",
+      "d": "yarn deploy",
+      "deploy": "(yarn build && ./aws/deploy.sh && ./scripts/notify.sh 'deployed :)' success) || ./scripts/notify.sh deploy 'fail :('",
+      "deployProd": "(yarn build && ./aws/deploy.sh prod && ./scripts/notify.sh 'deployed :)' success) || ./scripts/notify.sh deploy 'fail :('",
+      "synth": "yarn build && yarn cdk synth -c mode=development",
+      "synthCheck": "yarn build && yarn cdk synth -c mode=development >/dev/null",
+    },
+    "devDependencies": {
+      "prettier": "2.0.5"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

@@ -1,0 +1,25 @@
+type Query {
+  status: Status
+  maintenance: MaintenancePayload
+  Conversation(id: ID!): Conversation
+  Post(id: ID!): Post
+  user: User
+  User(id: ID!): User
+}
+
+type Mutation {
+  createUser(name: String!, age: Int!): User
+  updateUser(name: String, age: Int): User
+}
+
+type User @model {
+  id: ID! @isUnique
+  name: String
+  age: Int
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
