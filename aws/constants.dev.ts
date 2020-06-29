@@ -24,7 +24,7 @@ export const LAMBDA = {
    * Mutation
    */
   mutationLambda: {
-    name: 'mutationLambda',
+    name: '_mutationLambda',
     description: 'Handles all graphql Mutation operations',
     dataSourceName: 'mutationLambdaDataSource',
   },
@@ -32,7 +32,7 @@ export const LAMBDA = {
    * Query
    */
   queryLambda: {
-    name: 'queryLambda',
+    name: '_queryLambda',
     description: 'Handles all graphql Query operations',
     dataSourceName: 'queryLambdaDataSource',
   },
@@ -40,7 +40,7 @@ export const LAMBDA = {
    * Fields
    */
   fieldLambda: {
-    name: 'fieldLambda',
+    name: '_fieldLambda',
     description: 'Resolves any type within a parent type',
     dataSourceName: 'fieldLambdaDataSource',
   },
@@ -48,7 +48,7 @@ export const LAMBDA = {
    * Field Array
    */
   fieldArrayLambda: {
-    name: 'fieldArrayLambda',
+    name: '_fieldArrayLambda',
     description: 'Resolves any array type within a parent type',
     dataSourceName: 'fieldArrayLambdaDataSource',
   },
@@ -56,7 +56,7 @@ export const LAMBDA = {
    * Status
    */
   statusLambda: {
-    name: 'statusLambda',
+    name: '_statusLambda',
     description: 'Returns meta info about the running server',
     dataSourceName: 'statusLambdaDataSource',
   },
@@ -70,5 +70,5 @@ export const lambdaParams = (functionName: string) => ({
 })
 
 export const DDB_TABLES = {
-  users: { id: 'UsersTable', name: 'Users', description: 'Users Table' },
+  users: { id: '_UsersTable', name: '_Users', description: 'Users Table' },
 } as const

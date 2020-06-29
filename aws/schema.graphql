@@ -1,9 +1,11 @@
+type Status {
+  commitSha: String
+  identity: String
+  request: String
+}
+
 type Query {
   status: Status
-  maintenance: MaintenancePayload
-  Conversation(id: ID!): Conversation
-  Post(id: ID!): Post
-  user: User
   User(id: ID!): User
 }
 
@@ -21,5 +23,4 @@ type User @model {
 schema {
   query: Query
   mutation: Mutation
-  subscription: Subscription
 }
