@@ -1,11 +1,9 @@
-import { Handler } from '../../helpers'
-import * as AWS from 'aws-sdk'
-const db = new AWS.DynamoDB.DocumentClient()
-
-const attributesWithId = ['pushId', 'auth0UserId', 'postUserId', 'conversationId', 'sentToId', 'createdById']
+import { Handler } from "../../helpers";
+import * as AWS from "aws-sdk";
+const db = new AWS.DynamoDB.DocumentClient();
 
 export const handler: Handler = (event, context, callback, { tables }) => {
-  console.log({ delegatedTo: 'updateTypeLambda' })
+  console.log({ delegatedTo: "updateTypeLambda" });
   try {
     const {
       arguments: args,
@@ -14,81 +12,71 @@ export const handler: Handler = (event, context, callback, { tables }) => {
       info: { fieldName },
       // prev,
       // stash: { newId: id },
-    } = event
-    const { id, ...updatedAttributes } = args
-    const now = new Date().toISOString()
+    } = event;
+    const { id, ...updatedAttributes } = args;
+    const now = new Date().toISOString();
     const params = {
-      TableName: '',
+      TableName: "",
       Key: { id },
-      UpdateExpression: '',
+      UpdateExpression: "",
       ExpressionAttributeNames: {},
-      ReturnValues: 'ALL_NEW',
+      ReturnValues: "ALL_NEW",
       ExpressionAttributeValues: {},
-    }
+    };
 
     switch (fieldName) {
-      case 'updateConversation':
-        params.TableName = tables.conversations
-        break
-      case 'updatePost':
-        params.TableName = tables.posts
-        break
-      case 'updateMessage':
-        params.TableName = tables.messages
-        break
-      case 'updateUser':
-        params.TableName = tables.users
-        break
+      case "updateUser":
+        params.TableName = tables.users;
+        break;
     }
 
-    Object.keys(updatedAttributes).forEach(attribute => {
-      let value = updatedAttributes[attribute]
+    Object.keys(updatedAttributes).forEach((attribute) => {
+      let value = updatedAttributes[attribute];
       // undefined: return
       if (value === undefined) {
-        return
+        return;
       }
       // null: return. Previously: leave it as null
       // the problem is that client has mutation specified with many extra vars, which are unused and end up coming in as null
       // client fix would be to resend fields queried but not changed, but for now disallowing mutations to set things to null, since it's a edge case
       // and potentially toxic
       if (value === null) {
-        return
+        return;
       }
       // empty string: assign null
-      if (typeof value === 'string' && !value) {
-        value = null
+      if (typeof value === "string" && !value) {
+        value = null;
       }
       // defined: extract value
       if (value !== null) {
-        value = value?.id || value
+        value = value?.id || value;
       }
       // this is a bit sad, most attributes come as inputs "fooId" or "fooIds" and are saved in db as foo.
       // there are exceptions though.
-      const safeAttributeName = attributesWithId.includes(attribute) ? attribute : attribute.replace(/Ids?$/, '')
 
-      params.UpdateExpression = `${params.UpdateExpression}#${safeAttributeName} = :${safeAttributeName}, `
+      params.UpdateExpression = `${params.UpdateExpression}#${attribute} = :${attribute}, `;
       params.ExpressionAttributeNames = {
         ...params.ExpressionAttributeNames,
-        [`#${safeAttributeName}`]: safeAttributeName,
-      }
+        [`#${attribute}`]: attribute,
+      };
       params.ExpressionAttributeValues = {
         ...params.ExpressionAttributeValues,
-        [`:${safeAttributeName}`]: value,
-      }
-    })
-    params.UpdateExpression = `SET ${params.UpdateExpression} #updatedAt = :updatedAt`
+        [`:${attribute}`]: value,
+      };
+    });
+    params.UpdateExpression = `SET ${params.UpdateExpression} #updatedAt = :updatedAt`;
     params.ExpressionAttributeNames = {
       ...params.ExpressionAttributeNames,
-      '#updatedAt': 'updatedAt',
-    }
+      "#updatedAt": "updatedAt",
+    };
     params.ExpressionAttributeValues = {
       ...params.ExpressionAttributeValues,
-      ':updatedAt': now,
-    }
+      ":updatedAt": now,
+    };
 
-    console.log({ params })
+    console.log({ params });
     db.update(params, (err, result) => {
-      console.log({ result })
+      console.log({ result });
       if (err) {
         // prettier-ignore
         console.log({
@@ -97,11 +85,11 @@ export const handler: Handler = (event, context, callback, { tables }) => {
           errorMessage: err.message,
           statusCode: err.statusCode
          })
-        callback(err.message, null)
+        callback(err.message, null);
       } else {
-        callback(null, result.Attributes)
+        callback(null, result.Attributes);
       }
-    })
+    });
   } catch (catchError) {
     // prettier-ignore
     console.log({
@@ -109,6 +97,6 @@ export const handler: Handler = (event, context, callback, { tables }) => {
       errorStack: catchError.stack,
       errorMessage: catchError.message,
      })
-    callback(catchError.message, null)
+    callback(catchError.message, null);
   }
-}
+};

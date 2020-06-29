@@ -18,12 +18,6 @@ export const handler: Handler = (event, context, callback, { tables }) => {
     let TableName = ''
 
     switch (fieldName) {
-      case 'Conversation':
-        TableName = tables.conversations
-        break
-      case 'Post':
-        TableName = tables.posts
-        break
       case 'User':
         TableName = tables.users
         break
