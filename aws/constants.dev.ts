@@ -6,6 +6,10 @@ import path from 'path'
  */
 export const USER_POOL_NAME = 'StagingUserPool'
 export const USER_POOL_ID = 'StagingUserPool-1'
+export const IDENTITY_POOL_ID = 'StagingIdentityPool-1'
+export const IDENTITY_POOL_NAME = 'StagingIdentityPool'
+export const USER_POOL_CLIENT_ID = 'StagingUserPoolClient-1'
+export const USER_POOL_CLIENT_NAME = 'StagingUserPoolClient'
 /**
  * Others
  */
