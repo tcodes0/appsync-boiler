@@ -16,6 +16,8 @@ type Mutation {
 
 type User @model {
   id: ID! @isUnique
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
   name: String
   age: Int
 }
