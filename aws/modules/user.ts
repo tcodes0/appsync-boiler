@@ -8,6 +8,4 @@ export const userModule: (ModuleArgs: ModuleArgs) => void = ({
   if (!fieldArrayDataSource) {
     throw Error("fieldArrayDataSource not passed to userModule as arg");
   }
-  createResolver("User.name", fieldDataSource);
-  createResolver("User.age", fieldDataSource);
 };
