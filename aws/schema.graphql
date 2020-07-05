@@ -11,7 +11,7 @@ type Query {
 
 type Mutation {
   createUser(name: String!, age: Int!): User
-  updateUser(name: String, age: Int): User
+  updateUser(id: ID!, name: String, age: Int): User
 }
 
 type User @model {
