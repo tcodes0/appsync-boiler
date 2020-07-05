@@ -7,7 +7,6 @@ See the video for detailed code explanations and QA with community: https://www.
 After having an aws account setup and `aws cli` installed, run `yarn deploy`
 It will deploy a basic AppSync server for you using lambda resolvers.
 
-
 ## cdk bootstrap
 
 You may encounter an error while deploying about running `cdk bootstrap`
@@ -30,6 +29,7 @@ use `cat ~/.aws/credentials` to see them
 
 `_fieldLambda` resolves a model id within another model.
 Imagine you're liking a post in a social network:
+
 ```js
 // like model
 {
@@ -38,7 +38,8 @@ Imagine you're liking a post in a social network:
 }
 ```
 
-Since both strigs are ids to other models, you'd create a resolver using `_fieldLambda` in the `Like` module
+Since both strings are ids to other models, you'd create a resolver using `_fieldLambda` in the `Like` module
+
 ```js
 // modules/like
 createResolver('Like.user', _fieldLambda)
@@ -47,6 +48,7 @@ createResolver('Like.post', _fieldLambda)
 
 `_fieldArrayLambda` resolves a model id array within another model.
 Imagine you're saving a users email address, and that `email` is a model
+
 ```js
 // user model
 {
@@ -54,8 +56,11 @@ Imagine you're saving a users email address, and that `email` is a model
 }
 ```
 
-Since both strigs are ids to other models, you'd create a resolver using `_fieldLambda` in the `Like` module
+You'd create a resolver using `_fieldLambda` in the `Like` module
+
 ```js
 // modules/user
 createResolver('User.emails', _fieldArrayLambda)
 ```
+
+This allows AppSync to "unwrap" your data into graphQl responses
