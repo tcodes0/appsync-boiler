@@ -3,8 +3,7 @@ set -e
 
 MODE=development
 PROFILE=""
-FILE=$PWD/aws/constants.dev.ts
-STACK_NAME=''
+STACK_NAME='StagingStack-1' # see aws/constants.dev.ts line 20
 COMMIT_SHA=$(git rev-parse HEAD)
 
 if [ "$1" == prod ]; then
@@ -20,15 +19,9 @@ if [ "$1" == prod ]; then
   fi
 fi
 
-while read -r line; do
-  [[ $line =~ ^export\ const\ STACK_ID\ =\ (.*)$ ]] || true
-  if [ -n "${BASH_REMATCH[1]}" ]; then
-    STACK_NAME="${BASH_REMATCH[1]}"
-  fi
-done <"$FILE"
-
+exit
 if [ ! "$STACK_NAME" ]; then
-  echo "Failed to detect stack name from $FILE. Hardcode it or update regex."
+  echo "Please configure stack name in deploy.sh"
   exit 1
 fi
 
